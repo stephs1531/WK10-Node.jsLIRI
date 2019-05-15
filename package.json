@@ -1,0 +1,20 @@
+{
+  "name": "WK10-Node.jsLIRI",
+  "version": "1.0.0",
+  "description": "week 10 Homework - LIRI language interpretation and recognition interface",
+  "main": "liri.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephs1531/WK10-Node.jsLIRI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephs1531/WK10-Node.jsLIRI/issues"
+  },
+  "homepage": "https://github.com/stephs1531/WK10-Node.jsLIRI#readme"
+}
