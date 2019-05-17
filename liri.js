@@ -45,7 +45,7 @@ function startLiri() {
                 ]) .then ((answers) => {
                     var artist = answers.artist;
                     console.log(artist)
-                    // getConcert(artist);
+                    getConcert(artist);
                 })
                 break;
 
@@ -97,8 +97,18 @@ function startLiri() {
 }
 
 //bands in town concert function
-function getConcert(band) {
-    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+function getConcert(artist) {
+    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp").then (
+        function(response) {
+            // console.log(response);
+
+            for (var i = 0; i < response.data.length; i++)
+            console.log(`
+            ${response.data[i].venue.name}
+            ${response.data[i].venue.city}
+            ${response.data[i].datetime}
+            `)
+        })
 }
 
 //spotify function
