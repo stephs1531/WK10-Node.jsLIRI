@@ -8,6 +8,7 @@ var request = require("request");
 var inquirer = require("inquirer");
 // var colors = require("colors");
 var fs = require("fs");
+var axios = require("axios");
 
 //call the function to start LIRI
 startLiri();
@@ -35,6 +36,17 @@ function startLiri() {
             switch(answers.program) {
                 case "concert-this":
                 console.log("concert time!");
+                inquirer.prompt ([
+                    {
+                        type: "input",
+                        name: "artist",
+                        message: "Who would you like to see?"
+                    }
+                ]) .then ((answers) => {
+                    var artist = answers.artist;
+                    console.log(artist)
+                    // getConcert(artist);
+                })
                 break;
 
                 case "spotify-this-song":
@@ -56,6 +68,21 @@ function startLiri() {
 
                 case "movie-this":
                 console.log("movies!!");
+                inquirer.prompt([
+                    {
+                        type: "input",
+                        name: "movie",
+                        message: "What movie do you want to search?"
+                    }
+                ]).then ((answers) => {
+                    var movie = answers.movie;
+                    console.log(movie);
+                    getMovie(movie);
+                    if (movie = "undefined") {
+                        var movie = "Mr. Nobody";
+                        getMovie(movie);
+                    }
+                })
                 break;
 
                 case "do-what-it-says":
@@ -67,6 +94,11 @@ function startLiri() {
             }
     })
 
+}
+
+//bands in town concert function
+function getConcert(band) {
+    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
 }
 
 //spotify function
@@ -102,6 +134,23 @@ function musicInfo(song) {
         console.log("\nYour Song: \n");
         console.log("${title} by ${artist} on the album ${album}");
         console.log("Listen at ${URL}");
+    });
+
+}
+
+function getMovie(movie) {
+    axios.get("http://www.omdbapi.com/?t="+movie+"&y=&plot=short&apikey=trilogy") .then(
+    function (response) {
+                // console.log(response.data);
+                console.log(`
+                ${response.data.Title}
+                ${response.data.Year}
+                ${response.data.Rated}
+                ${response.data.Ratings[1].Source} ${response.data.Ratings[1].Value}
+                ${response.data.Country}
+                ${response.data.Plot}
+                ${response.data.Actors}`)
+    
     });
 
 }
