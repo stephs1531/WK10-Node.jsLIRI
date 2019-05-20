@@ -46,6 +46,7 @@ function startLiri() {
                     var artist = answers.artist;
                     console.log(artist)
                     getConcert(artist);
+                    setTimeout(playAgain, 1500);
                 })
                 break;
 
@@ -60,9 +61,7 @@ function startLiri() {
                     ]) .then ((answers) => {
                         var song = answers.song;
                         musicInfo(song);
-                        //as of 5/16 AM...this is *sort of* working but it's returning weird shit for all the variables
-
-                        // console.log(song);
+                        setTimeout(playAgain, 1500);
                     })
                 break;
 
@@ -82,12 +81,14 @@ function startLiri() {
                         var movie = "Mr. Nobody";
                         getMovie(movie);
                     }
+                    setTimeout(playAgain, 1500);
                 })
                 break;
 
                 case "do-what-it-says":
                 console.log("Do what log.txt says!");
                 doWhatItSays();
+                setTimeout(playAgain, 1500);
                 break;
 
                 default:
@@ -121,7 +122,7 @@ function musicInfo(song) {
 
     newSpotify.search({
         type: "track",
-        query: "song",
+        query: song,
         limit: 1
     }).then((data) => {
         console.log(data);
@@ -142,9 +143,9 @@ function musicInfo(song) {
         console.log(album);
 
         
-        console.log("\nYour Song: \n");
-        console.log("${title} by ${artist} on the album ${album}");
-        console.log("Listen at ${URL}");
+        console.log(`\nYour Song:\n`);
+        console.log(`${title} by ${artist} on the album ${album}`);
+        console.log(`Listen at ${URL}`);
     });
 
 }
@@ -167,7 +168,29 @@ function getMovie(movie) {
 };
 
 function doWhatItSays() {
-    fs.readFile("log.txt", "utf8", function(error, data) {
-        musicInfo(data);
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        var str = data;
+        var txtInfo = data.split(",");
+        console.log(txtInfo);
+        
+
+        musicInfo(txtInfo[1]);
+        // console.log(dat);
     })
-}
+};
+
+function playAgain() {
+    inquirer.prompt([
+        {
+        type: "confirm",
+        message: "Do you want to play again?",
+        name: "confirm",
+        default: true
+        }
+    ]) .then(function(inquirerResponse){
+        if (inquirerResponse.confirm) {
+            startLiri();
+        }
+    });
+
+};
