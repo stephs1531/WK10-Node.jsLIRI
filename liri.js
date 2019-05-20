@@ -86,7 +86,8 @@ function startLiri() {
                 break;
 
                 case "do-what-it-says":
-                console.log("what she said!");
+                console.log("Do what log.txt says!");
+                doWhatItSays();
                 break;
 
                 default:
@@ -166,5 +167,7 @@ function getMovie(movie) {
 };
 
 function doWhatItSays() {
-    
+    fs.readFile("log.txt", "utf8", function(error, data) {
+        musicInfo(data);
+    })
 }
